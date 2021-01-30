@@ -1,0 +1,9 @@
+public class Solution{
+public static long solution(long x , long y ) {
+	long temp = 1L*x*(x+1)/2 ;
+	int temp2 = x-1+y-1 ; 
+	long add = 1L*((temp2)*(temp2+1)/2 )-1L*((x-1)*(x)/2) ; 
+	return add+temp ; 
+	
+	}
+}
