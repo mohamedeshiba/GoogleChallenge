@@ -1,0 +1,28 @@
+public class Solution{
+    public static String solution(int i) {
+        String res = ""; 
+		StringBuilder s = new StringBuilder(); 
+		Boolean prime[]= new Boolean[25001];
+		for(int j = 0 ; j<25001;j++) {
+			prime[j]= true ; 
+		}
+		for (int p=2; p*p<=25000; p++)
+	    {
+	        if (prime[p] == true)
+	        {
+	            for (int j=p*p; j<=25000; j += p)
+	                prime[j] = false;
+	        }
+	    }
+		s.append("2");
+		for(int j = 3 ; j<=25000;j+=2) {
+			if(prime[j]) {
+				s.append(j+""); 
+			}
+		}
+		for(int j = i ; j<=i+4;j++) {
+			res+=s.charAt(j); 
+		}
+		return res; 
+    }
+}
