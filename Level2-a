@@ -1,0 +1,60 @@
+public class Solution {
+	static class pair{
+		int x ; int y ; 
+		public pair (int x , int y) {
+			this.x = x ; 
+			this.y = y ; 
+		}
+	}
+	public static Boolean visited[][];
+	public static Integer distances[][];
+	static LinkedList<pair> q = new LinkedList<pair>();
+  public static Boolean isInside(int x, int y) 
+	{ 
+	    if (x >= 0 && x <= 7 && y >= 0 && y <= 7) 
+	        return true; 
+	    return false; 
+	} 
+	
+	public static int solution(int src , int dest) {
+		int x1 = src/8 ; 
+		int y1 = src%8 ; 
+		int x2 = dest/8 ; 
+		int y2 = dest%8 ;
+		 helper(x1,y1,x2,y2);
+		 return distances[x2][y2]; 
+		
+		}
+	public static void helper(int x1 , int y1 , int x2,int y2) {
+		 int dx[] = { -2, -1, 1, 2, -2, -1, 1, 2 }; 
+		 int dy[] = { -1, -2, -2, -1, 1, 2, 2, 1 }; 
+		 distances = new Integer[8][8];
+		 visited = new Boolean [8][8];
+		 for(Integer[]x : distances) {
+			 Arrays.fill(x, -1);
+		 }
+		 for(Boolean[]x : visited) {
+			 Arrays.fill(x, false);
+		 }
+		 
+		 distances[x1][y1] = 0 ;
+		 visited[x1][y1]= true  ; 
+		 q.add(new pair(x1, y1)); 
+		 while(!q.isEmpty()) {
+			 pair remove = q.removeFirst();
+			 int tx = remove.x; 
+			 int ty = remove.y ; 
+			 int cost = distances[tx][ty]; 
+			 for(int i = 0 ; i<8;i++) {
+				 int x = tx+dx[i]; 
+				 int y = ty+dy[i];
+				 if(isInside(x, y)&& distances[x][y]==-1) {
+					 distances[x][y]= cost+1; 
+					 if(x==x2 && y==y2)return ; 
+					 q.add(new pair(x,y)); 
+				 }
+				 
+			 }
+		 }
+		
+	}
