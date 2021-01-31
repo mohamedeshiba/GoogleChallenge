@@ -1,0 +1,75 @@
+import java.util.LinkedList;
+
+public class Solution {
+	static Character arr[][] ; 
+	static Integer dp[][][] = new Integer[50][50][2000]; 
+	static int dir[][]= {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+	static class Data{
+		int x ; int y ; int k ; int length ; 
+		public Data(int a , int b , int c , int d) {
+			x = a ; 
+			y = b ; 
+			k = c; 
+			length = d ; 
+		}
+	}
+	
+	  public static void pre(){
+	      for (int i = 0; i < 50; i++) {
+	         for (int j = 0; j < 50; j++) {
+	            for (int k = 0; k < 2000; k++) {
+	               dp[i][j][k] = (int)1e9;
+	            }
+	         }
+	      }
+	   }
+	 
+	public static boolean Isinside(int i , int j ,int n , int m) {
+		if(i>=0 && i<=n-1 && j>=0 && j<=m-1)
+			return true; 
+		return false ; 
+	}
+	public static int shortestPath(int[][] grid, int k1){
+	      pre();
+	      int r = grid.length;
+	      int c = grid[0].length;
+	      LinkedList<Data> q = new LinkedList<Data>();
+	      Data root = new Data(0, 0, k1, 0);
+	      q.add(root);
+	      while (!q.isEmpty()) {
+	         Data node = q.removeFirst();
+	         int x = node.x;
+	         int y = node.y;
+	          int k = node.k;
+	         int length = node.length;
+	         if (x == r - 1 && y == c - 1)
+	         return length;
+	         length++;
+	         for (int i = 0; i < 4; i++) {
+	            int nx = x + dir[i][0];
+	            int ny = y + dir[i][1];
+	            if (nx == r - 1 && ny == c - 1)
+	            return length;
+	            if (Isinside(nx, ny, r, c)) {
+	               if (grid[nx][ny] == 0) {
+	                  if (length < dp[nx][ny][k]) {
+	                     q.add(new Data(nx, ny, k, length));
+	                     dp[nx][ny][k] = length;
+	                  }
+	               }
+	               else {
+	                  if (k > 0 && length < dp[nx][ny][k]) {
+	                     q.add(new Data(nx, ny, k - 1, length));
+	                     dp[nx][ny][k] = length;
+	                  }
+	               }
+	            }
+	         }
+	      }
+	      return -1;
+	   }
+	public static int solution(int [][] map) {
+		return shortestPath(map, 1)+1; 
+	}
+}
