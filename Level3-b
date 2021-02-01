@@ -1,0 +1,28 @@
+import java.util.Arrays;
+public class Solution {
+static int dp[][] = new int [200][200]; 
+
+    public static int solution(int n) {
+        for(int x[] :dp) {
+			Arrays.fill(x, -1);
+		}
+		return solve(1,0,n); 
+    }
+
+	public static int solve(int i , int sum,int n) {
+		if(sum==n) {
+			return 1 ; 
+		}
+		if(sum>n) {
+			return 0 ; 
+		}
+		if(i==n) {
+			return 0 ; 
+		}
+		if(dp[i][sum]!=-1) {
+			return dp[i][sum]; 
+		}
+		
+		return dp[i][sum]= solve(i+1, sum+i,n)+solve(i+1,sum,n); 
+	}
+}
